@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akash Kukkala (in$1ghter) — Blue Team &amp; Cloud Security</title>
+  <meta name="description" content="Akash Kukkala (in$1ghter) — blue team and cloud security engineer. MEng Cybersecurity, University of Maryland. Available December 2026.">
+  <meta name="color-scheme" content="dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // "lite" = reduced effects on low-end devices / save-data (?lite, ?full override)
+    (function () {
+      var d = document.documentElement, n = navigator, q = location.search;
+      d.classList.add("js");
+      var weak = (n.hardwareConcurrency && n.hardwareConcurrency <= 4) || (n.deviceMemory && n.deviceMemory <= 4) ||
+                 (n.connection && n.connection.saveData);
+      if ((weak || /[?&]lite/.test(q)) && !/[?&]full/.test(q)) d.classList.add("lite");
+    })();
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 19h10.5a4.5 4.5 0 0 0 .9-8.9A6.5 6.5 0 0 0 5.8 9.6 4.75 4.75 0 0 0 7 19z' fill='%233fa9f5'/><path d='M12 9.2 9.4 10.3v2c0 1.8 1.1 3.3 2.6 3.7 1.5-.4 2.6-1.9 2.6-3.7v-2z' fill='%23060a0f'/></svg>">
+</head>
+<body>
+
+<!-- background -->
+<div class="backdrop" aria-hidden="true">
+  <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><i class="orb o4"></i>
+  <div class="logs" id="logs"></div>
+</div>
+
+<!-- nav -->
+<header class="nav-wrap">
+  <nav class="nav glass" aria-label="Sections">
+    <div class="nav-left">
+      <a class="brand" href="#top" aria-label="Home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="cloud" d="M7 19h10.5a4.5 4.5 0 0 0 .9-8.9A6.5 6.5 0 0 0 5.8 9.6 4.75 4.75 0 0 0 7 19z"/><path class="shield" d="M12 9.2 9.4 10.3v2c0 1.8 1.1 3.3 2.6 3.7 1.5-.4 2.6-1.9 2.6-3.7v-2z"/></svg>
+        <span class="handle" data-fill="handle"></span>
+      </a>
+      <span class="nav-status" id="nav-status"></span>
+    </div>
+
+    <div class="nav-links" id="nav-links">
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#blog">Blog</a>
+      <a href="#experience">Experience</a>
+      <a href="#certs">Certs</a>
+      <a href="#research">Research</a>
+      <i class="nav-ink" id="nav-ink" aria-hidden="true"></i>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-search" id="open-palette" type="button" aria-label="Search the site (Command K)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        <span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <span class="nav-icons" id="nav-icons"></span>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </div>
+
+    <i class="nav-progress" id="nav-progress" aria-hidden="true"></i>
+  </nav>
+</header>
+
+<!-- command palette -->
+<div class="palette-wrap" id="palette" hidden>
+  <div class="palette glass" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="titlebar"><span class="lights" id="palette-lights"></span><span class="wtitle">~/search</span></div>
+    <div class="palette-body">
+      <label class="palette-input"><span aria-hidden="true">$</span><input id="palette-input" type="text" placeholder="jump to a section, project or link…" autocomplete="off" spellcheck="false"></label>
+      <ul class="palette-list" id="palette-list" role="listbox"></ul>
+      <p class="palette-hint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>↵</kbd> open · <kbd>esc</kbd> close</p>
+    </div>
+  </div>
+</div>
+<button class="palette-dock" id="palette-dock" type="button" hidden aria-label="Reopen search">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+  <span>~/search</span><em id="palette-dock-q"></em>
+</button>
+
+<aside class="rail rail-l" aria-label="Terminal (illustrative)">
+  <div class="mon glass term">
+    <p class="rail-label"><span class="live-dot"></span>~/shell</p>
+    <pre class="term-out" id="term" aria-live="off"></pre>
+  </div>
+  <div class="mon glass rail-scroll">
+    <p class="rail-label">scrolled <b class="rail-pct" id="rail-pct">000%</b></p>
+    <div class="rail-progress"><i id="rail-progress"></i></div>
+  </div>
+</aside>
+<aside class="rail rail-r" aria-label="Live monitor (illustrative)">
+  <div class="mon glass">
+    <p class="rail-label"><span class="live-dot"></span>soc // live</p>
+    <p class="mon-big" id="mon-clock">--:--:--</p>
+    <p class="mon-sub">UTC</p>
+  </div>
+  <div class="mon glass">
+    <p class="rail-label">session</p>
+    <p class="mon-big" id="mon-uptime">00:00:00</p>
+  </div>
+  <div class="mon glass mon-grow">
+    <p class="rail-label">events / s</p>
+    <svg class="spark" id="mon-spark" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"><polyline points=""/></svg>
+    <dl class="mon-counts">
+      <div><dt>events</dt><dd id="mon-events">0</dd></div>
+      <div><dt>alerts</dt><dd id="mon-alerts" class="t-warn">0</dd></div>
+      <div><dt>contained</dt><dd id="mon-contained" class="t-ok">0</dd></div>
+    </dl>
+  </div>
+  <div class="mon glass">
+    <p class="rail-label">threat level</p>
+    <p class="mon-level" id="mon-level">LOW</p>
+    <div class="mon-meter"><i id="mon-meter"></i></div>
+  </div>
+</aside>
+
+<main id="top">
+
+
+  <!-- about me -->
+  <section class="hero wrap" id="whoami">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/whoami</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <div class="dash">
+        <article class="about">
+          <div class="about-head">
+            <div class="avatar" id="avatar"></div>
+            <div class="about-id">
+              <h1 data-fill="name"></h1>
+              <p class="role"><span class="handle" data-fill="handle"></span> · <span data-fill="role"></span></p>
+              <p class="pill" id="available"></p>
+            </div>
+          </div>
+          <div class="bio" id="bio"></div>
+          <ul class="links" id="links" aria-label="Find me online"></ul>
+
+          <div class="about-foot">
+            <dl class="kpis" id="kpis"></dl>
+            <p class="now"><span class="now-label">~/now</span><span id="now"></span></p>
+          </div>
+        </article>
+
+        <aside class="journey" aria-label="My journey">
+          <p class="journey-label"><span>~/journey</span><b id="journey-count"></b></p>
+          <div class="journey-view" id="journey-view">
+            <div class="journey-rail"><i id="journey-fill"></i></div>
+            <ol class="journey-list" id="journey"></ol>
+          </div>
+          <p class="journey-hint" id="journey-hint">scroll ↓</p>
+        </aside>
+        </div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- skills -->
+  <section id="skills" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/skills</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <div class="head-row">
+          <header class="block-head">
+            <p class="eyebrow">Skills</p>
+            <h2>Tools I work with</h2>
+          </header>
+          <ul class="legend" id="skill-legend" aria-label="Skill areas"></ul>
+        </div>
+        <div class="skills" id="skill-groups"></div>
+        <div class="learning" id="learning"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- projects -->
+  <section id="projects" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/projects</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <header class="block-head">
+          <p class="eyebrow">Projects</p>
+          <h2>What I've built and defended</h2>
+        </header>
+        <div class="cards" id="project-cards"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- blog -->
+  <section id="blog" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/blog</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <header class="block-head">
+          <p class="eyebrow">Blog</p>
+          <h2>Writing</h2>
+        </header>
+        <div class="cards" id="blog-cards"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- experience -->
+  <section id="experience" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/experience</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <header class="block-head">
+          <p class="eyebrow">Experience</p>
+          <h2>Offense first, defense now</h2>
+        </header>
+        <ol class="timeline" id="timeline"></ol>
+        <div class="o2d" id="o2d"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- certifications -->
+  <section id="certs" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/certifications</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <header class="block-head">
+          <p class="eyebrow">Certifications</p>
+          <h2>Credentials</h2>
+        </header>
+        <div id="cert-groups"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- research -->
+  <section id="research" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/research</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <header class="block-head">
+          <p class="eyebrow">Research</p>
+          <h2>Published papers</h2>
+        </header>
+        <div class="cards cards-2" id="paper-cards"></div>
+        <div class="interests" id="interests"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="contact" class="block wrap">
+    <div class="window">
+      <div class="titlebar"><span class="wtitle">~/contact</span></div>
+      <div class="wbody"><div class="wclip"><div class="wpad">
+        <div class="contact">
+          <p class="eyebrow">Contact</p>
+          <h2>Hiring for a blue team?</h2>
+          <p class="sub">I'm looking for SOC, DFIR, threat hunting and cloud security roles starting December 2026. Send a message and it lands straight in my inbox.</p>
+
+          <form class="form" id="contact-form" novalidate>
+            <div class="form-row">
+              <label>Name<input name="name" autocomplete="name" required></label>
+              <label>Email<input name="email" type="email" autocomplete="email" required></label>
+            </div>
+            <label><span>Company / role <span class="opt">(optional)</span></span><input name="company" autocomplete="organization"></label>
+            <label>Message<textarea name="message" rows="5" required></textarea></label>
+            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="form-foot">
+              <button class="btn" type="submit">Send message <span aria-hidden="true">→</span></button>
+              <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+
+          <ul class="links links-center" id="contact-links"></ul>
+        </div>
+      </div></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span>© 2026 <span data-fill="name"></span> · <span class="handle" data-fill="handle"></span></span>
+  <span>Built with HTML, CSS &amp; JavaScript</span>
+</footer>
+
+<!-- cursor + toast -->
+<div class="cursor" id="cursor" aria-hidden="true"><i class="caret"></i></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
