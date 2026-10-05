@@ -11,7 +11,6 @@ window.SITE = {
     role: "Blue Team & Cloud Security Engineer",
     location: "College Park, Maryland",
     available: "Open to roles · December 2026",
-    gpa: "3.9",
     photo: "assets/photo.jpg",
     bio: [
       "I'm a cybersecurity engineer finishing my MEng at the University of Maryland (3.9 GPA). I started out in penetration testing, breaking into web apps and APIs for clients, and that's exactly why I'm on the blue team now: I defend systems the way an attacker would probe them.",
@@ -19,22 +18,15 @@ window.SITE = {
     ],
   },
 
-  // now: ~/now line under the intro
-  now: [
-    "Building AWS Secure Vault",
-    "Studying for CDSA & Security+",
-    "Graduating December 2026",
-  ],
-
   // links: buttons under the intro and in contact; url "" hides one, mailto copies
   links: [
     { label: "LinkedIn",    url: "https://www.linkedin.com/in/akashkukkala", icon: "linkedin" },
     { label: "GitHub",      url: "https://github.com/Akash-xploit",          icon: "github" },
     { label: "Résumé",      url: "assets/Akash_Kukkala_Resume.pdf",          icon: "resume" },
     { label: "Email",       url: "mailto:akash.kukkala@outlook.com",         icon: "email" },
-    { label: "Linktree",    url: "",                                         icon: "si:linktree" },
-    { label: "Hack The Box",url: "",                                         icon: "si:hackthebox" },
-    { label: "Medium",      url: "",                                         icon: "si:medium" },
+    { label: "Linktree",    url: "https://linktr.ee/akashkukkala",           icon: "si:linktree" },
+    { label: "Hack The Box",url: "https://profile.hackthebox.com/profile/019d450d-9db9-70f8-86ce-40ce946a963e?utm_medium=copy_url",              icon: "si:hackthebox" },
+    { label: "Medium",      url: "https://medium.com/@insighter9",           icon: "si:medium" },
   ],
 
   // journey: hero timeline, oldest first. type: edu | work | cert | research | project | next
@@ -44,15 +36,15 @@ window.SITE = {
     { date: "Sep 2022", type: "work",     title: "Penetration Testing Intern",        detail: "Web app and API pentests for Coincent clients: OWASP Top 10, Burp Suite, Metasploit." },
     { date: "Apr 2024", type: "research", title: "First paper published",             detail: "DDoS Attack Detection using Machine Learning, IJIRT." },
     { date: "May 2024", type: "edu",      title: "Graduated B.Tech",                  detail: "Moved from breaking systems toward defending them." },
-    { date: "Nov 2024", type: "cert",     title: "Ethical Hacking Essentials",        detail: "EC-Council." },
+    { date: "Nov 2024", type: "cert",     title: "Ethical Hacking Essentials",        detail: "TryHackMe." },
     { date: "Dec 2024", type: "research", title: "Second paper published",            detail: "Keylogger Detection System, IJIRT." },
-    { date: "Jan 2025", type: "edu",      title: "Started MEng at UMD",               detail: "Cybersecurity Engineering, University of Maryland. GPA 3.9." },
-    { date: "May 2025", type: "project",  title: "Hardened an AWS e-commerce stack",  detail: "12+ critical issues found and fixed across IAM, VPC, EBS and logging." },
+    { date: "Jan 2025", type: "edu",      title: "Started MEngg. at UMD",             detail: "Cybersecurity Engineering, University of Maryland." },
+    { date: "May 2025", type: "project",  title: "Hardened an AWS E-Commerce stack",  detail: "12+ critical issues found and fixed across IAM, VPC, EBS and logging." },
     { date: "Aug 2025", type: "project",  title: "Built an ML intrusion detector",    detail: "NSL-KDD, four classifiers, live Flask demo." },
     { date: "Sep 2025", type: "cert",     title: "eJPT",                              detail: "INE Security Junior Penetration Tester." },
     { date: "Feb 2026", type: "cert",     title: "AWS Cloud Practitioner",            detail: "Amazon Web Services." },
-    { date: "2026",     type: "project",  title: "Building AWS Secure Vault",         detail: "Serverless, encrypted, with GuardDuty and real-time alerting. Also studying for CDSA and Security+." },
-    { date: "Dec 2026", type: "next",     title: "MEng complete · ready for the blue team", detail: "Looking for SOC, DFIR, threat hunting and cloud security roles." },
+    { date: "April 2026",type: "project",  title: "Building AWS Secure Vault",        detail: "Serverless, encrypted, with GuardDuty and real-time alerting." },
+    { date: "Dec 2026", type: "next",     title: "Graduated M.Engg at UMD",           detail: "Looking for SOC, DFIR, threat hunting and cloud security roles." },
   ],
 
   // contact form: FormSubmit (first submission sends an activation email). formEmail "" hides the form
@@ -135,14 +127,6 @@ window.SITE = {
     },
   ],
 
-  // currently learning: dashed strip at the bottom of ~/skills
-  learning: [
-    { name: "Jenkins",             icon: "jenkins" },
-    { name: "Wazuh (hands-on)",    icon: "" },
-    { name: "Microsoft Sentinel",  icon: "" },
-    { name: "Splunk SPL",          icon: "si:splunk" },
-  ],
-
   // projects: progress: 0-100 marks a project as in progress; status "Upcoming" for planned ones. image overrides flow
   projects: [
     {
@@ -220,14 +204,6 @@ window.SITE = {
     },
   ],
 
-  // offense → defense
-  offenseToDefense: [
-    { offense: "Recon & enumeration with Nmap",        defense: "Know the attack surface first: AWS Config, security groups, CloudTrail" },
-    { offense: "Exploiting OWASP Top 10 (SQLi, XSS, IDOR)", defense: "Detections and hardening built around real attack paths" },
-    { offense: "Brute force & credential attacks",     defense: "MFA, lockouts and GuardDuty alerts on unusual sign-ins" },
-    { offense: "Writing risk-rated pentest reports",   defense: "Clear incident write-ups that non-security people can act on" },
-  ],
-
   // certifications: done: true = earned; planned: true = not started; url = credential link
   certifications: [
     { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services", date: "Feb 2026", done: true,
@@ -245,20 +221,16 @@ window.SITE = {
   ],
 
   // research papers
-  researchInterests: ["Intrusion detection", "ML for security", "Malware & credential theft", "Digital forensics", "Cloud threat detection"],
-
   papers: [
     {
       title: "Keylogger Detection System",
       venue: "IJIRT · Dec 2024",
-      tags: ["Malware analysis", "Credential theft", "Forensics"],
       summary: "How keyloggers are used in credential theft, what they leave behind for forensics, and the dual-use line between offensive and defensive tooling.",
       url: "",
     },
     {
       title: "DDoS Attack Detection using Machine Learning",
       venue: "IJIRT · Apr 2024",
-      tags: ["Machine learning", "Ensemble classifiers", "Network IDS"],
       summary: "A hybrid detection framework combining ensemble classifiers to identify malicious traffic and stay resilient against sophisticated attacks.",
       url: "",
     },

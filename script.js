@@ -168,52 +168,12 @@ function progressBar(pct) {
 }
 const isOngoing = (item) => item.progress !== undefined && item.progress !== null && item.progress !== "";
 
-// Stats row
-(function kpis() {
-  const certs = SITE.certifications || [];
-  const projects = SITE.projects || [];
-  const done = certs.filter((c) => c.done).length;
-  const training = certs.length - done;
-  const shipped = projects.filter((p) => !isOngoing(p)).length;
-  const building = projects.length - shipped;
-  const tiles = [
-    P.gpa ? ["Graduate GPA", P.gpa, ""] : null,
-    ["Certifications", String(done), training ? `+${training} in progress` : ""],
-    ["Projects", String(shipped), building ? `+${building} building` : ""],
-    ["Papers published", String((SITE.papers || []).length), ""],
-  ].filter(Boolean);
-  $("kpis").append(...tiles.map(([label, value, note]) =>
-    el("div", { class: "kpi" }, el("dt", {}, label), el("dd", {}, value, note ? el("small", {}, note) : null))
-  ));
-  const now = SITE.now || [];
-  if (now.length) $("now").append(...now.map((n) => el("span", { class: "now-item" }, n)));
-  else document.querySelector(".now").remove();
-})();
-
 const liveLinks = (SITE.links || []).filter((l) => l.url);
 $("links").append(...liveLinks.map(linkButton));
 $("contact-links").append(...liveLinks.map(linkButton));
 
 // Skills
 const skillGroups = SITE.skills || [];
-$("skill-legend").append(
-  el("li", { class: "legend-total" }, el("b", {}, String(skillGroups.reduce((n, g) => n + g.items.length, 0))), " tools · ", el("b", {}, String(skillGroups.length)), " areas"),
-  ...skillGroups.map((g, i) => {
-    const li = el("li", { class: "legend-item", style: `--a:${g.accent || "#3fa9f5"}`, tabindex: "0" }, g.group, el("b", {}, String(g.items.length)));
-    li.addEventListener("pointerenter", () => { $("skill-groups").classList.add("spot"); $("skill-groups").children[i].classList.add("lit"); });
-    li.addEventListener("pointerleave", () => { $("skill-groups").classList.remove("spot"); $("skill-groups").children[i].classList.remove("lit"); });
-    return li;
-  })
-);
-(function learning() {
-  const items = SITE.learning || [];
-  const box = $("learning");
-  if (!items.length) { box.remove(); return; }
-  box.append(
-    el("p", { class: "learning-label" }, el("span", { class: "now-item" }, "Currently learning")),
-    el("ul", { class: "skill-grid" }, items.map((s) => el("li", { class: "skill skill-learning" }, iconNode(s.icon, s.name, "#f5b942"), el("span", {}, s.name))))
-  );
-})();
 $("skill-groups").append(...skillGroups.map((g) =>
   el("article", { class: "skill-card glass", style: `--a:${g.accent || "#3fa9f5"}` },
     el("h3", {}, g.group),
@@ -309,24 +269,6 @@ $("timeline").append(...(SITE.experience || []).map((x) =>
   )
 ));
 
-// Offense -> defense
-(function o2d() {
-  const rows = SITE.offenseToDefense || [];
-  const box = $("o2d");
-  if (!rows.length) { box.remove(); return; }
-  box.append(
-    el("div", { class: "o2d-head" },
-      el("span", { class: "o2d-off" }, "As a pentester"),
-      el("span", { class: "o2d-mid", "aria-hidden": "true" }),
-      el("span", { class: "o2d-def" }, "Now, as a defender")),
-    ...rows.map((r) =>
-      el("div", { class: "o2d-row" },
-        el("p", { class: "o2d-off" }, r.offense),
-        el("i", { class: "o2d-arrow", "aria-hidden": "true" }),
-        el("p", { class: "o2d-def" }, r.defense)))
-  );
-})();
-
 // Certifications
 function certCard(c) {
   const logo = iconNode(c.logo || "", c.issuer || c.name, "#3fa9f5");
@@ -363,15 +305,7 @@ function certCard(c) {
 // Papers
 $("paper-cards").append(...(SITE.papers || []).map((p) =>
   el("article", { class: "card glass paper" },
-    el("div", { class: "card-top" },
-      p.image
-        ? el("img", { class: "card-img", src: p.image, alt: "" })
-        : el("div", { class: "doc", "aria-hidden": "true" },
-            el("p", { class: "doc-venue" }, "International Journal of Innovative Research in Technology"),
-            el("p", { class: "doc-title" }, p.title),
-            el("p", { class: "doc-author" }, P.name || ""),
-            el("i"), el("i"), el("i"), el("i"), el("i", { class: "short" }))
-    ),
+    p.image ? el("div", { class: "card-top" }, el("img", { class: "card-img", src: p.image, alt: "" })) : null,
     el("div", { class: "card-body" },
       el("div", { class: "paper-head" },
         el("span", { class: "paper-ico" }, iconNode("paper", "Paper")),
@@ -379,21 +313,12 @@ $("paper-cards").append(...(SITE.papers || []).map((p) =>
       ),
       el("h3", {}, p.title),
       el("p", { class: "card-text" }, p.summary),
-      p.tags && p.tags.length ? el("ul", { class: "tags" }, p.tags.map((t) => el("li", {}, t))) : null,
       p.url
         ? el("a", { class: "btn", href: p.url, target: "_blank", rel: "noopener" }, "Read paper", el("span", { "aria-hidden": "true" }, " ↗"))
         : el("span", { class: "btn btn-off" }, "Link coming soon")
     )
   )
 ));
-
-(function interests() {
-  const list = SITE.researchInterests || [];
-  const box = $("interests");
-  if (!list.length) { box.remove(); return; }
-  box.append(el("p", { class: "learning-label" }, "Research interests"),
-    el("ul", { class: "tags tags-lg" }, list.map((t) => el("li", {}, t))));
-})();
 
 // Journey timeline
 (function journey() {
@@ -775,7 +700,7 @@ const SCROLL_PER_PX = 1.4;
 let jTravel = 0;
 
 function layoutPin() {
-  const canPin = jList && window.matchMedia("(min-width: 1041px) and (min-height: 620px)").matches
+  const canPin = jList && window.matchMedia("(min-width: 1041px) and (min-height: 560px)").matches
     && !heroWin.classList.contains("is-min") && !heroWin.classList.contains("is-closed");
   hero.classList.toggle("pin", !!canPin);
   if (!canPin) {
