@@ -210,7 +210,7 @@ window.SITE = {
       logo: "amazonwebservices/amazonwebservices-original-wordmark", url: "" },
     { name: "eJPT — Junior Penetration Tester",  issuer: "INE Security",        date: "Sep 2025", done: true,
       logo: "", url: "" },
-    { name: "Ethical Hacking Essentials",        issuer: "EC-Council",          date: "Nov 2024", done: true,
+    { name: "Ethical Hacking Essentials",        issuer: "TryHackMe",           date: "Nov 2024", done: true,
       logo: "", url: "" },
     { name: "Microsoft SC-900",                  issuer: "Microsoft",           date: "Sep 2022", done: true,
       logo: "microsoft", url: "" },
