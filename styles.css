@@ -384,6 +384,8 @@ kbd { padding: 3px 6px; border-radius: 5px; font: 500 10.5px/1 var(--mono); colo
 .skills { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
 .skill-card { padding: 22px 22px 24px; grid-column: span 2; }
 .skill-card:nth-child(1), .skill-card:nth-child(2) { grid-column: span 3; }
+/* six groups: even 3 x 2 grid */
+.skills:has(> .skill-card:nth-child(6)) .skill-card { grid-column: span 2; }
 .skill-card h3 {
   display: flex; align-items: center; gap: 10px;
   margin: 0 0 16px; font: 600 15px/1.2 var(--sans); letter-spacing: -.01em;
