@@ -813,7 +813,11 @@ body.rails-away .rail-r { transform: translateX(calc(100% + 40px)); opacity: 0; 
   .bio p { font-size: 14.5px; }
   .card-top { aspect-ratio: 5 / 2; }
   .skill-card { padding: 12px 14px 14px; }
-  .skill { padding: 4px 9px 4px 4px; }
+  .skill { padding: 3px 8px 3px 3px; font-size: 12.5px; gap: 6px; }
+  .skill .ico, .skill .mono-tile { width: 22px; height: 22px; }
+  .skills { gap: 10px; }
+  .skill-grid { gap: 5px; }
+  .skill-card h3 { margin-bottom: 9px; }
   .form input, .form textarea { padding: 9px 11px; }
   .block-head { margin-bottom: 12px; }
   .block h2 { font-size: 24px; }
